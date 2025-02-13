@@ -8,18 +8,17 @@
 
 ```
 wandb_mnist/
-├── project/
-│   ├── CLI.py                  # 메인 실행 파일
+├── wandb_starter/
 │   ├── config/
-│   │   └── default.yml          # 설정 파일
-│   ├── wandb_starter/
-│   │   ├── data_loader/
-│   │   │   └── default_loader.py # MNIST 데이터 로더
-│   │   ├── evaluate.py          # 모델 평가 코드
-│   │   ├── net/
-│   │   │   └── CNN.py           # CNN 모델 정의
-│   │   ├── train.py             # 모델 학습 함수
-│   │   └── wandb_utils.py       # WandB 설정 및 로깅 함수
+│   ├── default.yml          # 설정 파일
+│   ├── data_loader/
+│   │   └── default_loader.py # MNIST 데이터 로더
+│   ├── net/
+│   │   └── CNN.py           # CNN 모델 정의
+│   ├── evaluate.py          # 모델 평가 코드
+│   ├── train.py             # 모델 학습 함수
+│   ├── wandb_utils.py       # WandB 설정 및 로깅 함수
+│   └── CLI.py                  # 메인 실행 파일
 ```
 
 ---

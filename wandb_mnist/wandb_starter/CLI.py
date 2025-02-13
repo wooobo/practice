@@ -1,4 +1,5 @@
-from torch import nn, optim
+import torch.nn as nn
+import torch.optim as optim
 from torch.utils import data
 
 from wandb_mnist.wandb_starter.data_loader.default_loader import MNIST, MNISTDataset
@@ -7,7 +8,13 @@ from wandb_mnist.wandb_starter.net.CNN import CNN
 from wandb_mnist.wandb_starter.train import training_epoch_loop
 from wandb_mnist.wandb_starter.wandb_utils import load_config, get_device, init_wandb
 
-if __name__ == "__main__":
+
+def load_object(module, name, **kwargs):
+    """문자열로 된 클래스 이름을 모듈에서 찾아 객체 생성"""
+    return getattr(module, name)(**kwargs)
+
+
+def main():
     # 설정 불러오기
     config = load_config(config_path="config/default.yml")
 
@@ -28,24 +35,33 @@ if __name__ == "__main__":
         shuffle=False
     )
 
-    # 모델, 손실 함수, 옵티마이저 설정
+    # 모델 설정
     device = get_device()
     model = CNN().to(device)
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=config["training"]["learning_rate"])
+
+    # 손실 함수 및 옵티마이저 설정
+    criterion = load_object(nn, config["training"]["criterion"])  # e.g., "CrossEntropyLoss"
+    optimizer = load_object(optim, config["training"]["optimizer"], params=model.parameters(),
+                            lr=config["training"]["learning_rate"])
 
     # wandb 초기화
     wandb = init_wandb(config)
     wandb.watch(model)
+
     # 학습 실행
     training_epoch_loop(
-        model,
-        train_loader,
-        test_loader,
-        criterion,
-        optimizer,
-        device,
+        model=model,
+        train_loader=train_loader,
+        test_loader=test_loader,
+        criterion=criterion,
+        criterion_name=config["training"]["criterion"],
+        optimizer=optimizer,
+        device=device,
         evaluation=evaluation,
         epochs=config["training"]["epochs"],
         log_fn=wandb.log
     )
+
+
+if __name__ == "__main__":
+    main()
