@@ -1,0 +1,21 @@
+experiment:
+  project_name: "cnn-training"
+  experiment_name: "experiment-1"
+  group_name: "KTH-CNN"
+
+training:
+  epochs: 2
+  batch_size: 128
+  learning_rate: 0.001
+
+dataset:
+  shuffle: True
+  batch_size: 64
+
+device:
+  use_cuda: True
+
+# 로깅 및 WandB 설정
+wandb:
+  use_wandb: true
+  save_model: false

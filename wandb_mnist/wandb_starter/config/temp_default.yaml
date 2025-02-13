@@ -1,0 +1,32 @@
+experiment_name: "mnist_cnn_test"
+project_name: "mnist_cnn_test_experiments"
+
+# 데이터 설정
+data:
+  dataset: "CNN_MNIST"
+  batch_size: 64
+  shuffle: true
+#  num_workers: 2
+
+# 모델 설정
+model:
+  architecture: "CNN"
+  input_size: 784  # MNIST 28x28
+  hidden_size: 128
+  output_size: 10
+  activation: "relu"
+
+# 학습 설정
+training:
+  epochs: 10
+  learning_rate: 0.001
+  optimizer: "adam"
+  loss_function: "cross_entropy"
+
+# 로깅 및 WandB 설정
+wandb:
+  use_wandb: true
+  project: "mnist_experiments"
+  entity: "my_team"
+  log_frequency: 10
+  save_model: true
