@@ -44,7 +44,7 @@ def train():
 
     # 📌 손실 함수 및 옵티마이저 설정
     criterion = load_object(nn, config.loss_function)  # e.g., "CrossEntropyLoss"
-    optimizer = load_object(optim, "Adam", params=model.parameters(), lr=config.learning_rate)
+    optimizer = load_object(optim, config.activation, params=model.parameters(), lr=config.learning_rate)
 
     # 📌 wandb 초기화 및 모델 감시
     wandb.watch(model)
